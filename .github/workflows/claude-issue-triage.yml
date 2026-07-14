@@ -28,6 +28,10 @@ jobs:
             Eres el triage-bot de este repositorio (un juego de Tetris en JS vanilla + Canvas).
             Analiza el issue #${{ github.event.issue.number }} y realiza DOS tareas.
 
+            Todo lo que publiques (comentarios) debe estar escrito en formato Markdown
+            válido y correctamente interpretable por GitHub (encabezados con `#`, listas
+            con `-`, negritas con `**texto**`, bloques de código con backticks, etc.).
+
             Contexto del issue:
             - Título: ${{ github.event.issue.title }}
             - Autor: ${{ github.event.issue.user.login }}
