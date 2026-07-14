@@ -1,0 +1,57 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    if: github.event.issue.user.type != 'Bot'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Triage issue with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*),Read,Grep,Glob"'
+          prompt: |
+            Eres el triage-bot de este repositorio (un juego de Tetris en JS vanilla + Canvas).
+            Analiza el issue #${{ github.event.issue.number }} y realiza DOS tareas.
+
+            Contexto del issue:
+            - Título: ${{ github.event.issue.title }}
+            - Autor: ${{ github.event.issue.user.login }}
+            Usa `gh issue view ${{ github.event.issue.number }}` para leer el cuerpo completo.
+
+            Tarea 1 — Labels:
+            - Obtén los labels disponibles con `gh label list`.
+            - Usa ÚNICAMENTE labels que ya existen. No inventes ni crees labels nuevos.
+            - Elige los 1–3 labels más apropiados y aplícalos con
+              `gh issue edit ${{ github.event.issue.number }} --add-label "<label>"`.
+            - Puedes explorar el código (Read/Grep/Glob sobre game.js, index.html, style.css)
+              para clasificar mejor.
+
+            Tarea 2 — Diagnóstico:
+            - Publica UN comentario con `gh issue comment ${{ github.event.issue.number }} --body "..."`
+              que contenga un diagnóstico general en español con esta estructura:
+                ## 🤖 Diagnóstico automático
+                **Resumen:** <1–2 frases>
+                **Área(s) afectada(s):** <ej. game.js: colisión / rotación / render / input>
+                **Causa probable / puntos a revisar:** <bullets con archivos y funciones concretas>
+                **Sugerencia de enfoque para la solución:** <pasos de alto nivel>
+                **Labels aplicados:** <lista>
+            - El diagnóstico debe ser accionable para quien luego implemente la solución.
+
+            Si el issue fue EDITADO y ya existe un comentario previo de diagnóstico tuyo,
+            publica uno nuevo actualizado indicando que es una re-evaluación tras la edición.
+            No cierres el issue ni modifiques el código.
