@@ -160,3 +160,120 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Tabla de récords ---- */
+.highscores-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+}
+
+.hs-entry {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #aaa;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.hs-entry.highlight {
+  background: rgba(122, 162, 247, 0.15);
+  color: #7aa2f7;
+  font-weight: 700;
+}
+
+.hs-rank {
+  color: #555570;
+  min-width: 16px;
+}
+
+.hs-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+  padding: 0 4px;
+}
+
+.hs-empty {
+  color: #555570;
+  font-size: 11px;
+}
+
+.stats-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: #888;
+}
+
+.stats-line strong {
+  color: #7aa2f7;
+}
+
+.reset-btn {
+  margin-top: 4px;
+  background: transparent;
+  border: 1px solid #3a3a5a;
+  color: #888;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.reset-btn:hover {
+  border-color: #e57373;
+  color: #e57373;
+}
+
+/* ---- Formulario de nombre (nuevo récord) ---- */
+.name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.name-form.hidden {
+  display: none;
+}
+
+.name-form label {
+  font-size: 12px;
+  color: #7aa2f7;
+}
+
+.name-form input {
+  background: #1a1a25;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  font-size: 13px;
+  text-align: center;
+  width: 160px;
+}
+
+.name-form button {
+  background: #7aa2f7;
+  color: #0f0f17;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.overlay-box #overlay-highscores {
+  width: 220px;
+}
